@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS.KOD | Cyfrowa Inżynieria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent: #007aff; /* Electric Blue */
+            --promo: #ff0000; /* Red Promo */
+            --bg: #ffffff;
+            --dark: #0a0a0b;
+            --surface: #151517;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--dark); overflow-x: hidden; }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 25px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-weight: 900; font-size: 1.4rem; letter-spacing: -1px; text-transform: uppercase; cursor: pointer; }
+        .logo span { color: var(--accent); }
+        .nav-contact { font-weight: 800; font-size: 0.9rem; color: var(--dark); text-decoration: none; border: 2px solid var(--dark); padding: 10px 20px; border-radius: 8px; transition: 0.3s; }
+        .nav-contact:hover { background: var(--dark); color: white; }
+
+        /* --- HERO --- */
+        .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 5%; background: var(--dark); color: white; position: relative; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+        .hero h1 { font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 900; letter-spacing: -0.05em; line-height: 0.9; margin-bottom: 30px; }
+        .hero h1 span { background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* --- BENTO DLACZEGO MY --- */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+            padding: 100px 5%; margin-top: -50px;
+        }
+        .bento-item {
+            background: var(--surface); color: white; padding: 40px; border-radius: 24px;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); border: 1px solid var(--border);
+        }
+        .bento-item:hover { border-color: var(--accent); transform: scale(1.02); }
+
+        /* --- SECTION TITLES --- */
+        .section-header { padding: 100px 5% 40px; text-align: center; }
+        .section-header h2 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; letter-spacing: -2px; text-transform: uppercase; }
+
+        /* --- CENNIK --- */
+        .pricing-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 0 5% 100px; max-width: 1400px; margin: 0 auto; }
+        .price-card {
+            padding: 60px 40px; border-radius: 32px; background: #f8f8f8;
+            border: 1px solid rgba(0,0,0,0.05); transition: 0.4s; position: relative;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .price-card.featured { background: var(--dark); color: white; transform: scale(1.05); z-index: 2; border: none; box-shadow: 0 30px 60px rgba(0,0,0,0.2); }
+        
+        /* --- CZERWONY PASEK PROMO --- */
+        .promo-ribbon {
+            position: absolute; top: 20px; right: -35px;
+            background: var(--promo); color: white;
+            padding: 8px 40px; font-size: 0.7rem; font-weight: 900;
+            text-transform: uppercase; transform: rotate(45deg);
+            z-index: 10; box-shadow: 0 0 15px rgba(255,0,0,0.4);
+        }
+
+        .price-card h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 20px; }
+        .price-val { font-size: 4rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 10px; }
+        .price-val span { font-size: 1rem; font-weight: 400; letter-spacing: 0; color: #888; }
+        .price-card.featured .price-val { color: white; }
+        
+        .price-desc { font-size: 1rem; color: #666; margin-bottom: 30px; min-height: 80px; }
+        .price-card.featured .price-desc { color: #aaa; }
+
+        .list-item { list-style: none; margin-bottom: 15px; font-size: 0.95rem; font-weight: 500; }
+        .list-item i { color: var(--accent); margin-right: 10px; }
+
+        .btn-price {
+            display: block; width: 100%; padding: 20px; border-radius: 12px;
+            text-align: center; text-decoration: none; font-weight: 900;
+            margin-top: auto; transition: 0.3s; text-transform: uppercase;
+        }
+        .price-card:not(.featured) .btn-price { background: var(--dark); color: white; }
+        .price-card.featured .btn-price { background: var(--accent); color: white; }
+        .btn-price:hover { transform: translateY(-3px); opacity: 0.9; }
+
+        /* --- REALIZACJE --- */
+        .portfolio { padding: 0 5% 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .p-card { height: 500px; border-radius: 30px; overflow: hidden; position: relative; cursor: pointer; }
+        .p-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
+        .p-card:hover img { transform: scale(1.1); }
+        .p-info { position: absolute; bottom: 0; left: 0; padding: 50px; color: white; z-index: 2; }
+        .p-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--dark); color: white; padding: 120px 5%; border-radius: 60px 60px 0 0; text-align: center; }
+        .f-title { font-size: clamp(2rem, 10vw, 6rem); font-weight: 900; letter-spacing: -4px; margin-bottom: 40px; }
+        .f-phone { font-size: 2.5rem; color: var(--accent); text-decoration: none; font-weight: 900; }
+
+        /* --- STYLE DLA PODSTRON (POPRAWIONE) --- */
+        #podstrona-sales, #podstrona-seo {
+            border-radius: 40px;
+            margin: 120px 5% 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        .back-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 122, 255, 0.3);
+        }
+
+        @media (max-width: 1100px) {
+            .bento-grid, .pricing-container, .portfolio { grid-template-columns: 1fr; }
+            .price-card.featured { transform: none; margin: 20px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="wrocDoStrony()">NEXUS<span>.KOD</span></div>
+        <a href="tel:+48570041809" class="nav-contact">ZADZWOŃ: 570 041 809</a>
+    </nav>
+
+    <div id="main-content">
+        <header class="hero">
+            <p style="text-transform: uppercase; letter-spacing: 5px; color: #555; font-weight: 700; margin-bottom: 20px;">Digital Engineering Studio</p>
+            <h1>DESIGNED TO<br><span>DOMINATE.</span></h1>
+            <p style="color: #666; max-width: 600px; font-size: 1.1rem;">Przestań prosić o uwagę. Zacznij ją dyktować. Budujemy systemy, które stawiają Cię na pozycji lidera, zanim konkurencja zdąży mrugnąć.</p>
+        </header>
+
+        <section class="bento-grid" id="dlaczego">
+            <div class="bento-item">
+                <i class="fas fa-bolt" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 20px;"></i>
+                <h4 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase;">Next-Gen Engine</h4>
+                <p style="font-size: 0.95rem; color: #777;">Używamy najnowszych technologii, o których konkurencja nie ma pojęcia. Twoja strona śmiga tak szybko, że klienci nie zdążą mrugnąć. Zero lagów.</p>
+            </div>
+
+            <div class="bento-item">
+                <i class="fas fa-unlock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 20px;"></i>
+                <h4 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase;">Clean Architecture</h4>
+                <p style="font-size: 0.95rem; color: #777;">Zero abonamentów. Masz czysty kod na własność i nikt Ci nie wysyła co miesiąc faktur za nic. Płacisz raz i masz święty spokój.</p>
+            </div>
+
+            <div class="bento-item">
+                <i class="fas fa-brain" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 20px;"></i>
+                <h4 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase;">Conversion UX</h4>
+                <p style="font-size: 0.95rem; color: #777;">Strona sama sprzedaje. Wszystko jest tak proste, że każdy od razu wie, gdzie kliknąć, żeby do Ciebie zadzwonić i dać Ci robotę.</p>
+            </div>
+
+            <div class="bento-item">
+                <i class="fas fa-satellite" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 20px;"></i>
+                <h4 style="font-size: 1.5rem; font-weight: 900; text-transform: uppercase;">Search Dominance</h4>
+                <p style="font-size: 0.95rem; color: #777;">Wbijamy Cię na szczyt Google w okolicy. Używamy nowoczesnych metod, żebyś był pierwszy, gdy ktoś szuka fachowca w Żorach.</p>
+            </div>
+        </section>
+
+        <div class="section-header">
+            <h2>Wybrane <span>Realizacje</span></h2>
+        </div>
+
+        <section class="portfolio">
+            <div class="p-card" onclick="pokazPodstrone('podstrona-sales')">
+                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070" loading="lazy">
+                <div class="p-info">
+                    <p style="color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Conversion Engineering</p>
+                    <h3 style="font-size: 2.5rem; font-weight: 900;">Sales Engine</h3>
+                </div>
+            </div>
+            
+            <div class="p-card" onclick="pokazPodstrone('podstrona-seo')">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072" loading="lazy">
+                <div class="p-info">
+                    <p style="color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Search Dominance</p>
+                    <h3 style="font-size: 2.5rem; font-weight: 900;">SEO Dominance</h3>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-header">
+            <h2>Pakiety <span>Wdrożeniowe</span></h2>
+        </div>
+
+        <section class="pricing-container">
+            <div class="price-card">
+                <h3>Standard Visual</h3>
+                <div class="price-val">499 <span>PLN</span></div>
+                <p class="price-desc">Twoja cyfrowa wizytówka. Wszystko co ważne w jednym miejscu. Idealne, żeby po prostu być w sieci i nie przepłacać.</p>
+                <ul>
+                    <li class="list-item"><i class="fas fa-check"></i> Design One-Page</li>
+                    <li class="list-item"><i class="fas fa-check"></i> Szybkość rakiety</li>
+                    <li class="list-item"><i class="fas fa-check"></i> Kontakt & Mapa</li>
+                </ul>
+                <a href="tel:+48570041809" class="btn-price">Wybieram Core</a>
+            </div>
+
+            <div class="price-card featured">
+                <div class="promo-ribbon">Pierwsze 2 firmy za 0 PLN</div>
+                <h3>Business Growth</h3>
+                <div class="price-val">999 <span>PLN</span></div>
+                <p class="price-desc">Tutaj nie ma żartów. Robimy pełne SEO, żeby telefon nie przestawał dzwonić. Dla tych, co chcą konkretnie zarabiać.</p>
+                <ul>
+                    <li class="list-item"><i class="fas fa-check"></i> Dominacja w Google</li>
+                    <li class="list-item"><i class="fas fa-check"></i> Lokalne SEO Żory</li>
+                    <li class="list-item"><i class="fas fa-check"></i> Copywriting Biznesowy</li>
+                </ul>
+                <a href="tel:+48570041809" class="btn-price">Biorę i zarabiam</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Market Dominator</h3>
+                <div class="price-val">1499 <span>PLN</span></div>
+                <p class="price-desc">Totalne rozwalenie systemu. Wiele podstron, reklamy i wsparcie 24/7. Twoja firma staje się numerem jeden.</p>
+                <ul>
+                    <li class="list-item"><i class="fas fa-check"></i> Pełny System Web</li>
+                    <li><i class="fas fa-check"></i> Kampania Google Ads</li>
+                    <li class="list-item"><i class="fas fa-check"></i> Support Techniczny</li>
+                </ul>
+                <a href="tel:+48570041809" class="btn-price">Chcę dominować</a>
+            </div>
+        </section>
+    </div>
+
+    <div id="content-container">
+        <section id="podstrona-sales" style="display:none; padding: 100px 5%; background: var(--dark); color: white;">
+            <h2 style="font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; margin-bottom: 30px; text-transform: uppercase;">SALES <span>ENGINE</span></h2>
+            <p style="font-size: 1.2rem; color: #aaa; max-width: 800px; line-height: 1.6; margin-bottom: 40px;">
+                To nie jest zwykła strona. To maszyna do konwersji. Projektujemy ścieżkę klienta tak, aby każde kliknięcie przybliżało go do zakupu. Żadnych rozpraszaczy, tylko czysty cel sprzedażowy. Skupiamy się na psychologii sprzedaży i architekturze, która zmusza do działania.
+            </p>
+            <button class="back-btn" onclick="wrocDoStrony()">POWRÓT DO STRONY</button>
+        </section>
+
+        <section id="podstrona-seo" style="display:none; padding: 100px 5%; background: var(--dark); color: white;">
+            <h2 style="font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; margin-bottom: 30px; text-transform: uppercase;">SEO <span>DOMINANCE</span></h2>
+            <p style="font-size: 1.2rem; color: #aaa; max-width: 800px; line-height: 1.6; margin-bottom: 40px;">
+                Wbijamy Cię na szczyt Google w Żorach. Dyktujemy uwagę klienta poprzez technologiczną przewagę kodu – Twoja strona ładuje się szybciej i pozycjonuje lepiej niż cokolwiek, co ma konkurencja. Lokalna dominacja zaczyna się od optymalizacji, której inni nie potrafią wykonać.
+            </p>
+            <button class="back-btn" onclick="wrocDoStrony()">POWRÓT DO STRONY</button>
+        </section>
+    </div>
+
+    <footer>
+        <h2 class="f-title">READY TO GO<br><span>ONLINE?</span></h2>
+        <a href="tel:+48570041809" class="f-phone">570 041 809</a>
+        <p style="margin-top: 60px; font-weight: 300; opacity: 0.5;">© 2026 NEXUS.KOD // SILESIA SECTOR</p>
+    </footer>
+
+    <script>
+        function pokazPodstrone(id) {
+            // Ukryj wszystko na głównej stronie
+            document.getElementById('main-content').style.display = 'none';
+            
+            // Ukryj wszystkie podstrony (czyszczenie)
+            document.getElementById('podstrona-sales').style.display = 'none';
+            document.getElementById('podstrona-seo').style.display = 'none';
+            
+            // Pokaż wybraną
+            document.getElementById(id).style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function wrocDoStrony() {
+            // Ukryj podstrony
+            document.getElementById('podstrona-sales').style.display = 'none';
+            document.getElementById('podstrona-seo').style.display = 'none';
+            
+            // Pokaż stronę główną
+            document.getElementById('main-content').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+    </script>
+
+</body>
+</html>
